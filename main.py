@@ -1,17 +1,46 @@
 from fastapi import FastAPI, Request
-from fastapi.templating import Jinja2Templates
 import json
-import time
-
+from userInterface import UserInterface
 from blockchain import Blockchain
 
 app = FastAPI()
 blockchain = Blockchain()
-templates = Jinja2Templates(directory="templates/")
+ui = UserInterface()
 
 @app.get('/')
-def get_ui(request: Request):
-    return templates.TemplateResponse('mytemplate.html', context={'request': request})
+def get_ui_welcome_screen(request: Request):
+    """
+    Returns html code with welcome message.
+    """
+    return ui.show_template(request, "<p>Hello dear doctor!</p><p>Please choose an action from menu.</p>")
+
+@app.get('/all-records')
+def get_ui_all_records(request: Request):
+    """
+    Returns html code with all records listed.
+    """
+    return ui.show_template(request, ui.prepare_all_records(blockchain))
+
+@app.get('/number-of-records')
+def get_ui_number_of_records(request: Request):
+    """
+    Returns html code with information about number of blocks.
+    """
+    return ui.show_template(request, "Number of blocks in chain: "+str(get_chain_length()))
+
+@app.get('/new-record')
+def get_ui_new_record_form(request: Request):
+    """
+    Returns html code with form for creating new records.
+    """
+    return ui.show_template(request, "Number of blocks in chain: "+str(get_chain_length()))
+
+@app.get('/mine')
+def get_ui_new_record_form(request: Request):
+    """
+    Returns html code with mining button and result.
+    """
+    return ui.show_template(request, "Number of blocks in chain: "+str(get_chain_length()))
 
 @app.get('/api/chain/get')
 def get_chain():

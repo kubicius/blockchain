@@ -1,6 +1,9 @@
 from block import Block
 import time
 class Blockchain:
+    """
+    A class that performs operations on blockchain.
+    """
     def __init__(self):
         self.unconfirmed_transactions = []
         self.chain = []
