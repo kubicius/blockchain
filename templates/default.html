@@ -34,6 +34,9 @@
             border-bottom: 1px solid #bababa;
             border-right: 1px solid #bababa;
         }
+        .filter + .result__label{
+            border-top: 1px solid #bababa;
+        }
     </style>
     <div class="container">
         <div class="row">
@@ -50,18 +53,25 @@
                 <div class="row menu__option" onclick="window.location.href='/all-records'">
                     <span>Get all records</span>
                 </div>
+                <div class="row menu__option" onclick="window.location.href='/all-records?filter=True'">
+                    <span>Get patient info</span>
+                </div>
                 <div class="row menu__option" onclick="window.location.href='/number-of-records'">
                     <span>Get number of records</span>
                 </div>
-                <div class="row menu__option" onclick="window.location.href='/get-all-records'">
+                <div class="row menu__option" onclick="window.location.href='/new-record'">
                     <span>Add record</span>
                 </div>
-                <div class="row menu__option" onclick="window.location.href='/get-all-records'">
+                <div class="row menu__option" onclick="window.location.href='/mine'">
                     <span>Mine</span>
                 </div>
             </div>
             <div class="col" style="background-color: white; color: black;">
-                {{ result|safe }}
+                {% if result == 'form' %}
+                    {% include 'form.html' %}
+                {% else %}
+                    {{ result|safe }}
+                {% endif %}
             </div>
         </div>
     </div>

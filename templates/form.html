@@ -1,0 +1,44 @@
+<p>Add new record to the registry.</p>
+<form action="/new-record/add" method="POST">
+    <div class="row">
+        <div class="col-lg-2 col-12">
+            <label for="person_id">Person ID:</label>
+        </div>
+        <div class="col">
+            <input type="number" name="person_id" id="person_id" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2 col-12">
+            <label for="person_id">Person name:</label>
+        </div>
+        <div class="col">
+            <input type="text" name="person_name" id="person_name" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2 col-12">
+            <label for="doctor">Doctor:</label>
+        </div>
+        <div class="col">
+            <input type="text" name="doctor" id="doctor" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2 col-12">
+            <label for="report">Person name:</label>
+        </div>
+        <div class="col">
+            <textarea name="report" id="report" required></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2 col-12">
+            <label for="medicine">Medicine:</label>
+        </div>
+        <div class="col">
+            <textarea name="medicine" id="medicine" required></textarea>
+        </div>
+    </div>
+    <input type="submit" value="Add">
+</form>
