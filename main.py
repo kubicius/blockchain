@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form
+from typing import Optional
 import json
 from userInterface import UserInterface
 from blockchain import Blockchain
@@ -15,11 +16,11 @@ def get_ui_welcome_screen(request: Request):
     return ui.show_template(request, "<p>Hello dear doctor!</p><p>Please choose an action from menu.</p>")
 
 @app.get('/all-records')
-def get_ui_all_records(request: Request):
+def get_ui_all_records(request: Request, filter: Optional[str] = False, id: Optional[int] = None):
     """
-    Returns html code with all records listed.
+    Returns html code with all records listed or records of one person if id is passed.
     """
-    return ui.show_template(request, ui.prepare_all_records(blockchain))
+    return ui.show_template(request, ui.prepare_all_records(blockchain, filter, id))
 
 @app.get('/number-of-records')
 def get_ui_number_of_records(request: Request):
@@ -33,14 +34,24 @@ def get_ui_new_record_form(request: Request):
     """
     Returns html code with form for creating new records.
     """
-    return ui.show_template(request, "Number of blocks in chain: "+str(get_chain_length()))
+    return ui.show_template(request, 'form')
+
+@app.post('/new-record/add')
+def get_ui_new_record_add(request: Request, person_id: int = Form(...), person_name: str = Form(...), doctor: str = Form(...), report: str = Form(...), medicine: str = Form(...)):
+    """
+    Returns html code with result of record adding.
+    """
+    return ui.show_template(request, add_new_transaction(person_id, person_name, doctor, report, medicine))
 
 @app.get('/mine')
-def get_ui_new_record_form(request: Request):
+def get_ui_mine(request: Request, fired: Optional[str] = False):
     """
     Returns html code with mining button and result.
     """
-    return ui.show_template(request, "Number of blocks in chain: "+str(get_chain_length()))
+    mined = False
+    if fired:
+        mined = mine()
+    return ui.show_template(request, ui.prepare_mine_result(fired, mined))
 
 @app.get('/api/chain/get')
 def get_chain():
