@@ -38,6 +38,7 @@ class Blockchain:
 
     def add_new_transaction(self, transaction):
         self.unconfirmed_transactions.append(transaction)
+        return "Transaction added."
 
     def mine(self):
         if not self.unconfirmed_transactions:
